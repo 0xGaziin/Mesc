@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import LoginPage from './components/LoginPage.jsx'
+import LoginPage from './components/LoginPage.jsx';
+import MainPage from './components/MainPage.jsx';
 import './App.css';
 
 const App = () => {
@@ -17,7 +18,7 @@ const App = () => {
 		return <LoginPage userInfoAddition={userInfo}/>
 	}
 
-	return <h1>Hello, world!</h1>
+	return <MainPage />
 }
 
 export default App;

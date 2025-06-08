@@ -1,5 +1,5 @@
 /*
-        This file controls user registration into the front-end.
+        This file controls user registration into the frontend.
 
         I'm still working on it. It's completely incomplete, 
         but I need to post it to GitHub before I make any changes.
@@ -9,6 +9,7 @@
 
 import { useState } from 'react';
 
+import MainPage from './MainPage.jsx';
 import './LoginPage.css';
 
 const LoginPage = (props) => {
@@ -16,19 +17,21 @@ const LoginPage = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [sucessRegister, setRegister] = useState(false);
+
+    const [messageError, setMessageError] = useState('');
+
     const [typePassword, setTypePasswordInput] = useState('password');
 
     const handleSubmit = async () => {
         if (username.trim() === '' || password.trim() === '') {
-            // - Error message.
+            setMessageError('Fill out all of the fields.');
         };
 
         const dataToSend = {
             username: username,
             password: password,
         };
-
-        console.log(dataToSend);
 
         const response = await fetch('http://localhost:8080/api/users/register', {
             // - Yes, I know the API is exposed. 
@@ -42,21 +45,28 @@ const LoginPage = (props) => {
             body: JSON.stringify(dataToSend)
         });
 
-        if (response.ok) {
-            const result = await response.json();
+        const result = await response.json(); // - Backend Response.
 
-            console.log(result.message)
+        if (response.ok) {
+            if (result.message === 'The user has been registered.') {
+                setRegister(true);
+            }
 
         } else {
+            setMessageError(result.message);
             console.error(`Request error: ${await response.json()}`);
         };
     };
+
+    if (sucessRegister) return <MainPage />
 
     return (
         <>
             <div className='container'>
                 <h2>Oops! Looks like you're not logged in.</h2>
                 <p>How about we solve it?</p>
+
+                <div className='error-message'>{messageError}</div>
 
                 <input type="text" className='input-value' value={username} onChange={(e) => {
                     setUsername(e.target.value);
