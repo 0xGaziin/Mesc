@@ -28,13 +28,15 @@ const LoginPage = (props) => {
             password: password,
         };
 
+        console.log(dataToSend);
+
         const response = await fetch('http://localhost:8080/api/users/register', {
             // - Yes, I know the API is exposed. 
             // - It's still localhost, so I'll be using security methods soon.
             method: 'POST',
 
             headers: {
-                'Content-Type': 'aplicattion/json',
+                'Content-Type': 'application/json',
             },
 
             body: JSON.stringify(dataToSend)
@@ -42,7 +44,9 @@ const LoginPage = (props) => {
 
         if (response.ok) {
             const result = await response.json();
-            // - Working. React will handle the response.
+
+            console.log(result.message)
+
         } else {
             console.error(`Request error: ${await response.json()}`);
         };

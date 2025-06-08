@@ -8,6 +8,8 @@ const serverData = express();
 
 import authRoutes from './routes/authRoutes.js';
 
+serverData.use(express.json()); 
+
 serverData.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
