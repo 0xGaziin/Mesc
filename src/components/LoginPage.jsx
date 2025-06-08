@@ -24,10 +24,6 @@ const LoginPage = (props) => {
     const [typePassword, setTypePasswordInput] = useState('password');
 
     const handleSubmit = async () => {
-        if (username.trim() === '' || password.trim() === '') {
-            setMessageError('Fill out all of the fields.');
-        };
-
         const dataToSend = {
             username: username,
             password: password,
@@ -49,12 +45,12 @@ const LoginPage = (props) => {
 
         if (response.ok) {
             if (result.message === 'The user has been registered.') {
-                setRegister(true);
+                return setRegister(true);
             }
 
         } else {
             setMessageError(result.message);
-            console.error(`Request error: ${await response.json()}`);
+            console.error(`Request error: ${result.message}`);
         };
     };
 
