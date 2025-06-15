@@ -25,7 +25,7 @@ export const register = async (request, response) => {
         // - Checks if there is another record in the database with the same username. 
         // - The check is done through a variable that executes the select command.
 
-        const [rows] = await pool.execute('SELECT username FROM users WHERE username = ?', [username]); // Ou email, se sua coluna for 'email'
+        const [rows] = await pool.execute('SELECT username FROM users WHERE username = ?', [username]);
         
         if (rows.length > 0) {
             return response.status(409).json({ message: 'Username is already in use.'});
